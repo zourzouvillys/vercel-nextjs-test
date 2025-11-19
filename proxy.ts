@@ -14,7 +14,7 @@ export default clerkMiddleware(async (auth, req) => {
         proxyHeaders.set('Clerk-Secret-Key', process.env.CLERK_SECRET_KEY || '')
         proxyHeaders.set('X-Forwarded-For','1.2.3.5')
         const proxyUrl = new URL(req.url)
-        proxyUrl.host = 'frontend-api.clerk.dev'
+        proxyUrl.host = process.env.CLERK_FRONTEND_API_HOSTNAME ?? 'frontend-api.clerk.dev'
         proxyUrl.port = '443'
         proxyUrl.protocol = 'https'
         proxyUrl.pathname = proxyUrl.pathname.replace('/__clerk', '')
