@@ -8,7 +8,6 @@ const isProtectedRoute = createRouteMatcher(['/dashboard/(.*)'])
 export default clerkMiddleware(async (auth, req) => {
     console.log('Middleware invoked for:', req.url)
     if (isProxyRoute(req)) {
-        console.log('Proxying request to Clerk frontend API:', req.url)
         const proxyHeaders = new Headers(req.headers)
         proxyHeaders.set('Clerk-Proxy-Url', process.env.NEXT_PUBLIC_CLERK_PROXY_URL || '')
         proxyHeaders.set('Clerk-Secret-Key', process.env.CLERK_SECRET_KEY || '')
@@ -18,6 +17,7 @@ export default clerkMiddleware(async (auth, req) => {
         proxyUrl.port = '443'
         proxyUrl.protocol = 'https'
         proxyUrl.pathname = proxyUrl.pathname.replace('/__clerk', '')
+        console.log('Proxying request to Clerk frontend API:', proxyUrl.host)
         return NextResponse.rewrite(proxyUrl, {
             request: {
                 headers: proxyHeaders,
