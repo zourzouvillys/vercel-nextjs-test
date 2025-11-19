@@ -11,7 +11,7 @@ export function proxy(req: NextRequest) {
     proxyUrl.host = 'frontend-api.clerk.dev'
     proxyUrl.port = '443'
     proxyUrl.protocol = 'https'
-    proxyUrl.pathname = proxyUrl.pathname.replace('/__proxy', '')
+    proxyUrl.pathname = proxyUrl.pathname.replace('/__clerk', '')
 
     return NextResponse.rewrite(proxyUrl, {
       request: {
