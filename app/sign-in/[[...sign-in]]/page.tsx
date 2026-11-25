@@ -1,11 +1,10 @@
 import { SignIn } from '@clerk/nextjs'
+import { SIGN_IN_URL, SIGN_UP_URL } from '@/lib/auth-routes'
 
-// Sign-in on this app's own origin, for the same reason as /sign-up: the
-// hosted Account Portal denies the camera to frames.
 export default function Page() {
   return (
-    <div className="flex justify-center p-8">
-      <SignIn />
-    </div>
+    <main className="flex justify-center p-8">
+      <SignIn routing="path" path={SIGN_IN_URL} signUpUrl={SIGN_UP_URL} />
+    </main>
   )
 }
