@@ -1,13 +1,19 @@
-'use client'
+import { Show } from '@clerk/nextjs'
+import { currentUser } from '@clerk/nextjs/server'
 
-import { SignIn, useUser } from '@clerk/nextjs'
+export default async function Home() {
+  const user = await currentUser()
+  const name = user?.firstName ?? user?.primaryEmailAddress?.emailAddress
 
-export default function Home() {
-  const { isSignedIn } = useUser()
-
-  if (!isSignedIn) {
-    return <SignIn />
-  }
-
-  return <div>Welcome!</div>
+  return (
+    <main className="flex flex-col items-center gap-4 p-16">
+      <h1 className="text-4xl font-semibold">Hello, {name ?? 'world'}!</h1>
+      <Show when="signed-out">
+        <p>Sign in or sign up to continue.</p>
+      </Show>
+      <Show when="signed-in">
+        <p>You are signed in.</p>
+      </Show>
+    </main>
+  )
 }

@@ -1,13 +1,13 @@
+import { Suspense } from 'react'
 import { SignUp } from '@clerk/nextjs'
+import { SIGN_IN_URL, SIGN_UP_URL } from '@/lib/auth-routes'
 
-// Sign-up on this app's own origin rather than the hosted Account Portal.
-// The portal sends `Permissions-Policy: camera=()`, which denies the camera to
-// every frame on the page, so a challenge that needs it (Protect's face
-// liveness check) cannot run there.
 export default function Page() {
   return (
-    <div className="flex justify-center p-8">
-      <SignUp />
-    </div>
+    <main className="flex justify-center p-8">
+      <Suspense>
+        <SignUp routing="path" path={SIGN_UP_URL} signInUrl={SIGN_IN_URL} />
+      </Suspense>
+    </main>
   )
 }
